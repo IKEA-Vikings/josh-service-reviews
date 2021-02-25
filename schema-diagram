@@ -1,0 +1,15 @@
+Table reviews {
+  review_id int [pk, increment]
+  product_id int
+  overall float
+  ease_of_assembly float
+  value_for_money float
+  product_quality float
+  appearance float
+  works_as_expected float
+  recommended bool
+  title varchar
+  review_text varchar
+  reviewer_name varchar
+  date date
+}
