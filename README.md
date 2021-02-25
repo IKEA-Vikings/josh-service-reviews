@@ -18,7 +18,8 @@
 ## Usage
 
 > Basic API usage:
- - For summaries of reviews for all items:
+ - For summaries of reviews for all items: GET /api/reviews
+ - For pages use query param eg. GET /api/reviews?page=2
 ```JSON
 
 {
