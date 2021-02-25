@@ -18,11 +18,36 @@
 ## Usage
 
 > Basic API usage:
+ - For summaries of reviews for all items:
+```JSON
+
+{
+  "page": {
+    "number": 1,
+    "outOf": 5
+  },
+  "summaries": [
+    {
+      "itemID": 1,
+      "number": 479,
+      "average": 4.4
+    },
+    {
+      "itemID": 2,
+      "number": 11,
+      "average": 5
+    },
+    ...
+  ]
+}
+
+```
  - For a summary: GET /api/reviews/:itemID
  - example responses based on item at https://www.ikea.com/us/en/p/hemnes-2-drawer-chest-black-brown-50242619/:
 ```JSON 
 
 {
+  "itemID": 1,
   "number": 479,
   "average": 4.4
 }
@@ -35,6 +60,7 @@
 ```JSON
 
 {
+  "itemID": 1,
   "averageRatings": {
     "number": 479,
     "overall": 4.4,
