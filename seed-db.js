@@ -68,7 +68,7 @@ var productNoun = function (useDescription = true) {
 var opinion = function (title) {
   var iVerbs = ['think', 'found out', 'would say', 'have to tell you'];
   var itVerbs = ['seems like', 'turns out to be', 'really is', 'was', 'has to be'];
-  return `I ${pickRandom(iVerbs)} that it ${pickRandom(itVerbs)} ${title}`;
+  return `I ${pickRandom(iVerbs)} that it ${pickRandom(itVerbs)} a${'aeiou'.includes(title[0]) ? 'n' : ''} ${title}`;
 }
 
 var randomLetter = function() {
@@ -98,12 +98,12 @@ var generateReview = function (product_id, review_id, reviewer) {
   return {
     review_id,
     product_id,
-    overall: Math.ceiling(Math.random() * 50) / 10,
-    ease_of_assembly: Math.ceiling(Math.random() * 50) / 10,
-    value_for_money: Math.ceiling(Math.random() * 50) / 10,
-    product_quality: Math.ceiling(Math.random() * 50) / 10,
-    appearance: Math.ceiling(Math.random() * 50) / 10,
-    works_as_expected: Math.ceiling(Math.random() * 50) / 10,
+    overall: Math.ceil(Math.random() * 50) / 10,
+    ease_of_assembly: Math.ceil(Math.random() * 50) / 10,
+    value_for_money: Math.ceil(Math.random() * 50) / 10,
+    product_quality: Math.ceil(Math.random() * 50) / 10,
+    appearance: Math.ceil(Math.random() * 50) / 10,
+    works_as_expected: Math.ceil(Math.random() * 50) / 10,
     recommended: true,
     title,
     review_text: opinion(title),
