@@ -11,5 +11,6 @@ Table reviews {
   title varchar
   review_text varchar
   reviewer_name varchar
+  reviewer_id int
   date date
 }

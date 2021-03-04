@@ -54,6 +54,32 @@
 }
 
 ```
+
+ - Use a comma-separated list to get the exact summaries you need:
+ - eg. GET /api/reviews/11,22,38
+
+```JSON
+
+[
+  {
+    "itemID": 11,
+    "number": 3,
+    "average": 4.7
+  },
+  {
+    "itemID": 22,
+    "number": 8,
+    "average": 3.9
+  },
+  {
+    "itemID": 38,
+    "number": 73,
+    "average": 4.8
+  }
+]
+
+```
+
  - For all details: GET /api/reviews/:itemID/details
  - 20 reviews will show per page.
  - Get other pages by eg. GET /api/reviews/:itemID/details?page=2
