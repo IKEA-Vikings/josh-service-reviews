@@ -1,31 +1,31 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-  review_id: Number,
-  product_id: Number,
+  reviewId: Number,
+  productId: Number,
   overall: Number,
-  ease_of_assembly: Number,
-  value_for_money: Number,
-  product_quality: Number,
+  easeOfAssembly: Number,
+  valueForMoney: Number,
+  productQuality: Number,
   appearance: Number,
-  works_as_expected: Number,
+  worksAsExpected: Number,
   recommended: Boolean,
   title: String,
-  review_text: String,
-  reviewer_name: String,
-  reviewer_id: Number,
+  reviewText: String,
+  reviewerName: String,
+  reviewerId: Number,
   date: Date
 });
 
 const Review = mongoose.model('Review', reviewSchema);
 
-const swap = (arr, i, j) => {
+var swap = (arr, i, j) => {
   const temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
 };
 
-const shuffleDeck = function(deck) {
+var shuffleDeck = function (deck) {
   deck = deck.slice(); // don't want to mutate the input deck.
   for (let i = 0; i < deck.length; i++) {
     let j = i + Math.floor(Math.random() * (deck.length - i));
@@ -37,7 +37,7 @@ const shuffleDeck = function(deck) {
 
 var pickRandom = function (list) {
   return list[Math.floor(Math.random() * list.length)];
-}
+};
 
 var productAdjective = function (useAdverb = true) {
   var adjectives = ['lousy', 'great', 'fun', 'stellar', 'terrible', 'ugly', 'beautiful', 'unappealing', 'sturdy', 'clean', 'lovely', 'stunning',
@@ -45,12 +45,12 @@ var productAdjective = function (useAdverb = true) {
   var adverbs = ['pretty', 'really', 'super', 'incredibly', 'utterly', 'somewhat', 'kinda', 'amazingly', 'very', 'kind of', 'absolutely'];
 
   var adverbRoll = Math.random();
-  if (useAdverb && adverbRoll > 0.7) {
-    return `${pickRandom(adverbs)} ${productAdjective(adverbRoll > 0.97)}`;
+  if (useAdverb && adverbRoll > 0.8) {
+    return `${pickRandom(adverbs)} ${productAdjective(adverbRoll > 0.955)}`;
   } else {
     return pickRandom(adjectives);
   }
-}
+};
 
 var productNoun = function (useDescription = true) {
   var nouns = ['product', 'item', 'thing', 'gift', 'object', 'doohickey', 'gizmo', 'product', 'item', 'product', 'item', 'product', 'item', 'product', 'item',
@@ -58,26 +58,26 @@ var productNoun = function (useDescription = true) {
   var fors = ['kitchen', 'bathroom', 'bedroom', 'yard', 'husband', 'wife', 'son', 'daughter', 'girlfriend', 'boyfriend', 'sister', 'brother', 'aunt', 'uncle', 'dog', 'cat', 'pet',
     'house', 'apartment', 'condo', 'living room', 'den', 'basement', 'attic', 'job', 'office', 'home office', 'home', 'floor', 'wall', 'coworker', 'fiance', 'dad', 'mom', 'grandma', 'grandpa'];
   var forRoll = Math.random();
-  if (useDescription && forRoll > 0.6) {
+  if (useDescription && forRoll > 0.7) {
     return `${productNoun(false)} for my ${pickRandom(fors)}`;
   } else {
     return pickRandom(nouns);
   }
-}
+};
 
 var opinion = function (title) {
   var iVerbs = ['think', 'found out', 'would say', 'have to tell you'];
   var itVerbs = ['seems like', 'turns out to be', 'really is', 'was', 'has to be'];
   return `I ${pickRandom(iVerbs)} that it ${pickRandom(itVerbs)} a${'aeiou'.includes(title[0]) ? 'n' : ''} ${title}`;
-}
+};
 
-var randomLetter = function() {
+var randomLetter = function () {
   var letters = 'aaaaaaaarrrrrrrrsssssssstttttttteeeeeeennnnnndddddiiiiillllloooooggggkkkmmmhhffvvååjycxz';
   var letters = letters.split('');
   return pickRandom(letters);
-}
+};
 
-var randomName = function() {
+var randomName = function () {
   var letterCount = Math.random() * 9 + 5;
   var name = '';
   for (var i = 0; i < letterCount; i++) {
@@ -85,82 +85,82 @@ var randomName = function() {
   }
 
   return name;
-}
+};
 
-var randomDate = function() {
+var randomDate = function () {
   var date = new Date();
   date.setDate(date.getDate() - Math.random() * 10000);
   return date;
-}
+};
 
-var generateReview = function (product_id, review_id, reviewer) {
+var generateReview = function (productId, reviewId, reviewer) {
   var title = `${productAdjective()} ${productNoun()}`;
   return {
-    review_id,
-    product_id,
+    reviewId,
+    productId,
     overall: Math.ceil(Math.random() * 50) / 10,
-    ease_of_assembly: Math.ceil(Math.random() * 50) / 10,
-    value_for_money: Math.ceil(Math.random() * 50) / 10,
-    product_quality: Math.ceil(Math.random() * 50) / 10,
+    easeOfAssembly: Math.ceil(Math.random() * 50) / 10,
+    valueForMoney: Math.ceil(Math.random() * 50) / 10,
+    productQuality: Math.ceil(Math.random() * 50) / 10,
     appearance: Math.ceil(Math.random() * 50) / 10,
-    works_as_expected: Math.ceil(Math.random() * 50) / 10,
+    worksAsExpected: Math.ceil(Math.random() * 50) / 10,
     recommended: true,
     title,
-    review_text: opinion(title),
-    ...reviewer,
+    reviewText: opinion(title),
+    reviewerName: reviewer.name,
+    reviewerId: reviewer.id,
     date: randomDate()
   };
-}
+};
 
-var generateReviewers = function() {
+var generateReviewers = function () {
   var reviewers = [];
 
   for (var i = 1; i <= 100; i++) {
     reviewers.push({
-      reviewer_id: i,
-      reviewer_name: randomName()
+      id: i,
+      name: randomName()
     });
   }
 
   return reviewers;
-}
+};
 
 var generateReviews = function () {
-  var review_id = 1;
+  var reviewId = 1;
   var reviews = [];
   var reviewers = generateReviewers();
-  for (var product_id = 1; product_id <= 100; product_id++) {
-    var random_threshold = Math.random() ** 2;
-    var random_try = Math.random();
+  for (var productId = 1; productId <= 100; productId++) {
+    var randomThreshold = Math.pow(Math.random(), 2);
+    var randomTry = Math.random();
     var shuffledReviewers = shuffleDeck(reviewers);
     var reviewer = 0;
-    while (random_try > random_threshold && reviewer < shuffledReviewers.length) {
-      reviews.push(generateReview(product_id, review_id, reviewer));
-      review_id++;
+    while (randomTry > randomThreshold && reviewer < shuffledReviewers.length) {
+      reviews.push(generateReview(productId, reviewId, shuffledReviewers[reviewer]));
+      reviewId++;
       reviewer++;
-      random_try = Math.random();
+      randomTry = Math.random();
     }
   }
 
   return reviews;
-}
-
-var saveReview = function (review, cb) {
-  mongoose.connect('mongodb://localhost/hotseat', { useNewUrlParser: true, useUnifiedTopology: true });
-
-  const db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error:'));
-
-  db.once('open', function () {
-    new Review(review).save(function (err, prompt) {
-      db.close();
-      if (err) {
-        return console.error(err);
-      }
-
-      cb();
-    });
-  })
 };
 
-module.exports = { saveReview };
+var seedDatabase = function (callback = () => { }) {
+  var reviews = generateReviews();
+
+  console.log('about to try to save all reviews');
+  mongoose.connect('mongodb://localhost/vikea', { useNewUrlParser: true, useUnifiedTopology: true });
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function () {
+    Review.insertMany(reviews)
+      .then(() => {
+        console.log('finished inserting reviews');
+        db.close();
+        callback();
+      });
+  });
+};
+
+module.exports = { seedDatabase };
