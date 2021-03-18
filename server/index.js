@@ -16,7 +16,7 @@ app.get('/api/reviews', (req, res, next) => {
 app.get('/api/reviews/:itemID', (req, res, next) => {
   console.log('about to get summary');
   console.log(req.params.itemID);
-  db.getReviewSummary(req.params.itemID, summary => {
+  db.getReviewSummary(req.params.itemID.split(','), summary => {
     res.send(summary);
   });
 });

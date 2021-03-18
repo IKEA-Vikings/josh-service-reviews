@@ -76,7 +76,7 @@ class Db {
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', () => {
       var agg = [
-        { $match: { productId: Number(productId) } },
+        { $match: { productId: { $in: productId.map(id => Number(id)) } } },
         { $group: { _id: '$productId', average: { $avg: '$overall' }, number: { $sum: 1 } } }
       ];
       console.log(agg);
