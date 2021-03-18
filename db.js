@@ -68,6 +68,26 @@ class Db {
       //console.log(summaries);
     });
   }
+
+  getReviewSummary(productId, callback) {
+    console.log('now getting review summary for product ' + productId);
+    this.mongoose.connect('mongodb://localhost/vikea', { useNewUrlParser: true, useUnifiedTopology: true });
+    const db = this.mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', () => {
+      var agg = [
+        { $match: { productId: Number(productId) } },
+        { $group: { _id: '$productId', average: { $avg: '$overall' }, number: { $sum: 1 } } }
+      ];
+      console.log(agg);
+      this.Review.aggregate(agg)
+        .then(summary => {
+          console.log('finished getting summary');
+          db.close();
+          callback(summary);
+        });
+    });
+  }
 }
 
 module.exports = Db;
