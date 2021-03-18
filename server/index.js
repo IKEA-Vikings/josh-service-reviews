@@ -21,10 +21,17 @@ app.get('/api/reviews/:itemID', (req, res, next) => {
   });
 });
 
-app.get('/api/reviews/:itemID/details', (req,res,next) => {
+app.get('/api/reviews/:itemID/details', (req, res, next) => {
   console.log('about to get details');
   db.getReviewDetails(req.params.itemID, details => {
     res.send(details);
+  });
+});
+
+app.get('/api/reviews/:itemID/details/:reviewID', (req, res, next) => {
+  console.log('now getting one single review');
+  db.getSingleReview(req.params.itemID, req.params.reviewID, review => {
+    res.send(review);
   });
 });
 

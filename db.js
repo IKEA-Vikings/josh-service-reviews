@@ -103,6 +103,7 @@ class Db {
         .then(averageRatings => {
           this.Review.find({productId: Number(productId)}).limit(20)
             .then(reviews => {
+              db.close();
               callback({
                 itemID: Number(productId),
                 averageRatings: averageRatings,
@@ -110,6 +111,20 @@ class Db {
                 customerReviews: reviews
               });
             });
+        });
+    });
+  }
+
+  getSingleReview(productId, reviewId, callback) {
+    console.log('getting single review ' + reviewId + ' from product ' + productId);
+    this.mongoose.connect('mongodb://localhost/vikea', { useNewUrlParser: true, useUnifiedTopology: true});
+    const db = this.mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', () => {
+      this.Review.find({productId: Number(productId), reviewId: Number(reviewId)})
+        .then(review => {
+          db.close();
+          callback(review);
         });
     });
   }
