@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "react-dev": "webpack watch"
+    "react-dev": "webpack watch",
+    "seed": "node run-seed.js"
   },
   "dependencies": {
     "express": "^4.17.1",
