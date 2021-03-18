@@ -39,19 +39,11 @@ class Db {
   }
 
   getReviewSummaries(pageNumber, callback) {
-    // in mongo we could get these summaries by doing for example
-    // db.reviews.aggregate([{ $group: { _id: '$productId', average: { $avg: '$overall' }, number: { $sum: 1} }}, { $sort: { _id: 1}}, { $limit: 20 }]);
     console.log('now getting review summaries');
     this.mongoose.connect('mongodb://localhost/vikea', { useNewUrlParser: true, useUnifiedTopology: true });
     const db = this.mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', () => {
-      /*
-      const summaries = db.collection('reviews').aggregate([
-        { $group: { _id: '$productId', average: { $avg: '$overall' }, number: { $sum: 1 } } },
-        { $sort: { _id: 1 } }
-      ]);*/
-
       this.Review.aggregate([
         { $group: { _id: '$productId', average: { $avg: '$overall' }, number: { $sum: 1 } } },
         { $sort: { _id: 1 } },
@@ -63,9 +55,6 @@ class Db {
           db.close();
           callback(summaries);
         });
-
-
-      //console.log(summaries);
     });
   }
 
@@ -85,6 +74,42 @@ class Db {
           console.log('finished getting summary');
           db.close();
           callback(summary);
+        });
+    });
+  }
+
+  getReviewDetails(productId, callback) {
+    console.log('getting review details for product ' + productId);
+    this.mongoose.connect('mongodb://localhost/vikea', { useNewUrlParser: true, useUnifiedTopology: true });
+    const db = this.mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', () => {
+      var agg = [
+        { $match: { productId: Number(productId) } },
+        {
+          $group: {
+            _id: '$productId',
+            overall: { $avg: '$overall' },
+            number: { $sum: 1 },
+            easeOfAssembly: { $avg: '$easeOfAssembly' },
+            valueForMoney: { $avg: '$valueForMoney' },
+            appearance: { $avg: '$appearance' },
+            productQuality: { $avg: '$productQuality' },
+            worksAsExpected: { $avg: '$worksAsExpected' }
+          }
+        }
+      ];
+      this.Review.aggregate(agg)
+        .then(averageRatings => {
+          this.Review.find({productId: Number(productId)}).limit(20)
+            .then(reviews => {
+              callback({
+                itemID: Number(productId),
+                averageRatings: averageRatings,
+                page: null,
+                customerReviews: reviews
+              });
+            });
         });
     });
   }

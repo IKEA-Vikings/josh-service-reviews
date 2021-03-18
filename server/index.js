@@ -21,4 +21,11 @@ app.get('/api/reviews/:itemID', (req, res, next) => {
   });
 });
 
+app.get('/api/reviews/:itemID/details', (req,res,next) => {
+  console.log('about to get details');
+  db.getReviewDetails(req.params.itemID, details => {
+    res.send(details);
+  });
+});
+
 app.listen(3001, () => console.log('listening'));
