@@ -1,23 +1,5 @@
-const mongoose = require('mongoose');
-
-const reviewSchema = new mongoose.Schema({
-  reviewId: Number,
-  productId: Number,
-  overall: Number,
-  easeOfAssembly: Number,
-  valueForMoney: Number,
-  productQuality: Number,
-  appearance: Number,
-  worksAsExpected: Number,
-  recommended: Boolean,
-  title: String,
-  reviewText: String,
-  reviewerName: String,
-  reviewerId: Number,
-  date: Date
-});
-
-const Review = mongoose.model('Review', reviewSchema);
+const Db = require('./db');
+const defaultDb = new Db();
 
 var swap = (arr, i, j) => {
   const temp = arr[i];
@@ -170,21 +152,14 @@ var generateReviews = function () {
   return reviews;
 };
 
-var seedDatabase = function (callback = () => { }) {
+var seedDatabase = function (callback = () => { }, db = defaultDb) {
   var reviews = generateReviews();
 
   console.log('about to try to save all reviews');
-  mongoose.connect('mongodb://localhost/vikea', { useNewUrlParser: true, useUnifiedTopology: true });
-  const db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function () {
-    Review.insertMany(reviews)
-      .then(() => {
-        console.log('finished inserting reviews');
-        db.close();
-        callback();
-      });
-  });
+
+  console.log(db.Review);
+
+  db.addReviews(reviews, callback);
 };
 
-module.exports = { seedDatabase };
+module.exports = seedDatabase;
