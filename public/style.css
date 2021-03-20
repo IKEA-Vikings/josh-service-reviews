@@ -1,0 +1,87 @@
+.modal-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.review-modal {
+  overflow: scroll;
+  width: 25vw;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.star, .halfstar, .nonstar {
+  width: 1.125rem;
+  height: 1.125rem;
+  display: inline;
+}
+
+.star-icon {
+  display: inline;
+}
+
+.bar {
+  background-color: #DFDFDF;
+  width: 100%;
+  height: .5rem;
+  padding: 0 1rem;
+  margin: 0 1rem;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.dot {
+  width: .25rem;
+  height: .25rem;
+  background-color: white;
+  border-radius: .125rem;
+  z-index: 2;
+  margin: 0 .5rem;
+}
+
+.dot:nth-child(1) {
+  margin-left: .25rem;
+}
+
+.dot:nth-child(4) {
+  margin-right: .25rem;
+}
+
+.fill {
+  background-color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: .5rem;
+  z-index: 1;
+  border-radius: .0625rem;
+}
+
+.ratings,.sub-ratings div {
+  display: flex;
+}
+
+.sub-ratings {
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: #DFDFDF solid .25rem;
+}
+
+.customer-review-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category {
+  min-width: 56%;
+}
+
+.review-modal > * {
+  margin: 0 2rem;
+}
