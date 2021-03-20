@@ -1,6 +1,7 @@
 const express = require('express');
 const Db = require('../db');
 const db = new Db();
+const path = require('path');
 
 const app = express();
 
@@ -33,6 +34,10 @@ app.get('/api/reviews/:itemID/details/:reviewID', (req, res, next) => {
   db.getSingleReview(req.params.itemID, req.params.reviewID, review => {
     res.send(review);
   });
+});
+
+app.get('/:productID', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '../', 'public/test.html'));
 });
 
 app.listen(3001, () => console.log('listening'));

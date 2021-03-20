@@ -57,7 +57,12 @@ class Review extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.state);
+    const match = document.location.href.match(/\/(\d+)$/);
+    if (match) {
+      fetch(`/api/reviews/${match[1]}/details`)
+        .then(res => res.json())
+        .then(json => this.setState(json));
+    }
   }
 
 
