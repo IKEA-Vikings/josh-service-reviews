@@ -4,6 +4,19 @@ import Bar from './bar.jsx';
 import CustomerReview from './customer-review.jsx';
 import Subratings from './subratings.jsx';
 
+const toggleReviewModal = function () {
+  const reviewModalWrapper = document.querySelector('#review-modal-wrapper');
+  if (!reviewModalWrapper.displayed) {
+    console.log('displaying reviews');
+    reviewModalWrapper.displayed = true;
+    reviewModalWrapper.setAttribute('style', 'display:block;');
+  } else {
+    console.log('undisplaying reviews');
+    reviewModalWrapper.displayed = false;
+    reviewModalWrapper.setAttribute('style', 'display:none;');
+  }
+};
+
 class Review extends React.Component {
   constructor(props) {
     super(props);
@@ -69,10 +82,13 @@ class Review extends React.Component {
   render() {
     return (
       <div className='review'>
-        review
-        <Stars count={this.state.averageRatings.overall} />
-        <div className='modal-wrapper'>
+        <div className='toggle' onClick={toggleReviewModal}>
+          review
+          <Stars count={this.state.averageRatings.overall} />
+        </div>
+        <div className='modal-wrapper' id='review-modal-wrapper' style={{display: 'none'}}>
           <div className='review-modal'>
+            <div className='close' onClick={toggleReviewModal}>X</div>
             <h2>Reviews</h2>
             <h3 className='overall'>{this.state.averageRatings.overall}</h3>
             <Stars count={this.state.averageRatings.overall} />
