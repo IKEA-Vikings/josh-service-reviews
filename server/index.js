@@ -2,10 +2,11 @@ const express = require('express');
 const Db = require('../db');
 const db = new Db();
 const path = require('path');
-
+const cors = require('cors');
 const app = express();
 
 app.use(express.static(__dirname + '/../public'));
+app.use(cors());
 
 app.get('/api/reviews', (req, res, next) => {
   db.getReviewSummaries(1, summaries => {
@@ -40,4 +41,4 @@ app.get('/:productID', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '../', 'public/test.html'));
 });
 
-app.listen(3001, () => console.log('listening'));
+app.listen(3000, () => console.log('listening'));

@@ -80,17 +80,18 @@ class Review extends React.Component {
 
 
   render() {
+    const round = n => Math.round(n*10)/10;
     return (
       <div className='review'>
         <div className='toggle' onClick={toggleReviewModal}>
-          review
-          <Stars count={this.state.averageRatings.overall} />
+          <div>Reviews</div>
+          <Stars count={this.state.averageRatings.overall} /> <span className="weak">({this.state.averageRatings.number})</span>
         </div>
         <div className='modal-wrapper' id='review-modal-wrapper' style={{display: 'none'}}>
           <div className='review-modal'>
             <div className='close' onClick={toggleReviewModal}>X</div>
             <h2>Reviews</h2>
-            <h3 className='overall'>{this.state.averageRatings.overall}</h3>
+            <h3 className='overall'>{round(this.state.averageRatings.overall)}</h3>
             <Stars count={this.state.averageRatings.overall} />
             <div className='average-customer-ratings'>
               <h4>Average customer ratings</h4>
@@ -98,7 +99,7 @@ class Review extends React.Component {
                 <div className='overall'>
                   <div className='category'>Overall</div>
                   <div className='graphic'><Stars count={this.state.averageRatings.overall} /></div>
-                  <div className='rating'>{this.state.averageRatings.overall}</div>
+                  <div className='rating'>{round(this.state.averageRatings.overall)}</div>
                   <Subratings
                     easeOfAssembly={this.state.averageRatings.easeOfAssembly}
                     valueForMoney={this.state.averageRatings.valueForMoney}

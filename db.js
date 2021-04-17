@@ -106,7 +106,7 @@ class Db {
               db.close();
               callback({
                 itemID: Number(productId),
-                averageRatings: averageRatings,
+                averageRatings: averageRatings[0],
                 page: null,
                 customerReviews: reviews
               });

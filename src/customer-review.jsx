@@ -4,6 +4,16 @@ import Bar from './bar.jsx';
 import Subratings from './subratings.jsx';
 
 const CustomerReview = function ({ data }) {
+  const dateFormat = data.date.match(/(?<year>\d{4})-(?<month>\d\d)-(?<day>\d\d).*/);
+  if (dateFormat) {
+    const {year, month, day} = dateFormat.groups;
+    data.date = `${month}/${day}/${year}`;
+  }
+
+  if (!data.name) {
+    data.name = data.reviewerName;
+  }
+
   return (
     <div className='customer-review'>
       <div className='customer-review-header'>
