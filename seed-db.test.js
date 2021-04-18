@@ -4,6 +4,6 @@ const db = new Db(mockMongoose);
 
 require('./seed-db')(() => { }, db);
 
-test('sample', () => {
-  expect('idk').not.toBeNull();
+test('mock has records', () => {
+  expect(db.justInserted).not.toBeNull();
 });
