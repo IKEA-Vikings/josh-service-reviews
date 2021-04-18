@@ -17,6 +17,16 @@ const toggleReviewModal = function () {
   }
 };
 
+const blankAverageRatings = {
+	number: 0,
+	overall: 0,
+	easeOfAssembly: 0,
+	valueForMoney: 0,
+	productQuality: 0,
+	appearance: 0,
+	worksAsExpected: 0
+};
+
 class Review extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +84,13 @@ class Review extends React.Component {
     if (match) {
       fetch(`/api/reviews/${match[1]}/details`)
         .then(res => res.json())
-        .then(json => this.setState(json));
+        .then(json => {
+		if (!json.averageRatings) {
+			json.averageRatings = blankAverageRatings;
+		}
+
+		this.setState(json);
+	});
     }
   }
 
@@ -89,7 +105,7 @@ class Review extends React.Component {
         </div>
         <div className='modal-wrapper' id='review-modal-wrapper' style={{display: 'none'}}>
           <div className='review-modal'>
-            <div className='close' onClick={toggleReviewModal}>X</div>
+    	    <div id='close-box'><div className='close' onClick={toggleReviewModal}>X</div></div>
             <h2>Reviews</h2>
             <h3 className='overall'>{round(this.state.averageRatings.overall)}</h3>
             <Stars count={this.state.averageRatings.overall} />
